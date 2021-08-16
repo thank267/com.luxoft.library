@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обновить комментарий</title>
+</head>
+<body>
+    <div th:if="${comment.isPresent()}">
+        <form th:method="POST" th:action="@{/comments/{id}/update(id=${comment.get().getId()})}" th:object="${comment}">
+            
+            <label for="text">Введите комментарий:</label>
+            <input type="text" th:field="*{text}" id="text"/>
+            <input type="hidden" th:value="${comment.get().getBook().getId()}" id="book" name="book"/>
+            <br/>
+            <input type="submit" value="Изменить!"/>
+
+        </form>
+
+        
+    <div>
+
+</body>
+</html>
