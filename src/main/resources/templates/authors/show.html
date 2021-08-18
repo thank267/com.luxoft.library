@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автор</title>
+</head>
+<body>
+   
+    <div th:if="${author.isPresent()}">
+        <p th:text="${author.get().getName()}"></p>
+        <a th:href="@{/authors/{id}/edit(id=${author.get().getId()})}">Редактировать</a>
+        <a th:href="@{/authors/{id}/delete(id=${author.get().getId()})}">Удалить</a>
+       
+    </div>
+
+    <div th:unless="${author.isPresent()}">
+        <p>Автор не найден</p>
+    </div>
+   
+</body>
+</html>
