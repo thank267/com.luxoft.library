@@ -10,7 +10,7 @@
 
     <body>
     <div th:if="${book.isPresent()}">
-        <p th:text="'Наименование: '+ ${book.get().getName() +', Автор: '+book.get().getAuthor().getName()+', Жанр: '+book.get().getGenre().getName()}"></p>
+        <p th:text="'Наименование: '+ ${book.get().getName() +', Автор: '+book.get().authorName+', Жанр: '+book.get().genreName}"></p>
         <a th:href="@{/books/{id}/edit(id=${book.get().getId()})}">Редактировать</a>
         <a th:href="@{/books/{id}/delete(id=${book.get().getId()})}">Удалить</a>
         <br/>

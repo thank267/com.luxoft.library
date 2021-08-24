@@ -10,8 +10,8 @@
    
     <div th:if="${author.isPresent()}">
         <p th:text="${author.get().getName()}"></p>
-        <a th:href="@{/authors/{id}/edit(id=${author.get().getId()})}">Редактировать</a>
-        <a th:href="@{/authors/{id}/delete(id=${author.get().getId()})}">Удалить</a>
+        <a th:href="@{/authors/{id}/edit(id=${author.get().id})}">Редактировать</a>
+        <a th:href="@{/authors/{id}/delete(id=${author.get().id})}">Удалить</a>
        
     </div>
 

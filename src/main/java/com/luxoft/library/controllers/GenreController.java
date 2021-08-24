@@ -1,6 +1,8 @@
 package com.luxoft.library.controllers;
 
-import com.luxoft.library.repositories.GenreRepository;
+import com.luxoft.library.services.GenreService;
+import com.luxoft.library.DTO.GenreDTO;
+import com.luxoft.library.utils.ObjectMapperUtils;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,18 +17,20 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/genres")
 public class GenreController {
 
-    private GenreRepository genreRepository;
+    private final GenreService genreService;
+
+    private final ObjectMapperUtils objectMapperUtils;
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("genres", genreRepository.findAll());
+        model.addAttribute("genres", objectMapperUtils.mapAll(genreService.findAll(), GenreDTO.class));
         return "genres/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("genre", genreRepository.findById(id));
+        model.addAttribute("genre", genreService.findById(id).map(ge -> objectMapperUtils.map(ge, GenreDTO.class)));
         return "genres/show";
     }
-    
+
 }

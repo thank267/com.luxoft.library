@@ -8,11 +8,14 @@
 </head>
 <body>
     <div th:if="${comment.isPresent()}">
-        <form th:method="POST" th:action="@{/comments/{id}/update(id=${comment.get().getId()})}" th:object="${comment}">
+        <form th:method="POST" th:action="@{/comments}" th:object="${comment}">
             
+            <input type="hidden" th:field="*{id}" id="id"/>
+            <input type="hidden" th:field="*{bookId}" id="bookId"/>
+            <input type="hidden" th:field="*{bookName}" id="bookName"/>
             <label for="text">Введите комментарий:</label>
             <input type="text" th:field="*{text}" id="text"/>
-            <input type="hidden" th:value="${comment.get().getBook().getId()}" id="book" name="book"/>
+           
             <br/>
             <input type="submit" value="Изменить!"/>
 

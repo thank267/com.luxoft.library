@@ -8,8 +8,10 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.luxoft.library.entities.AbstractEntity;
 
-public abstract class AbstractJpaDAO<T, ID> implements GenericDAO<T, ID>{
+@Transactional(readOnly = true)
+public abstract class AbstractJpaDAO<T extends AbstractEntity, ID> {
 
     private Class<T> clazz;
 
@@ -33,24 +35,32 @@ public abstract class AbstractJpaDAO<T, ID> implements GenericDAO<T, ID>{
     }
 
     @Transactional
-    public void save(T entity) {
-        entityManager.persist(entity);
+    public ID save(T entity) {
+        if (entity.getId() == null) {
+            entityManager.persist(entity);
+        } else {
+            entityManager.merge(entity);
+        }
+
+        return (ID) entity.getId();
+
     }
 
-    @Transactional
-    public T update(T entity) {
-        return entityManager.merge(entity);
-    }
-
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delete(T entity) {
         entityManager.remove(entity);
     }
 
-    @Transactional
-    public void deleteById(ID id) {
-        findById(id).ifPresent(entity -> delete(entity));
-        
+    @Transactional(rollbackFor = Exception.class)
+    public long deleteById(ID id) {
+        T entity = this.findById(id).orElseThrow();
+        this.delete(entity);
+        return entity.getId();
     }
-    
+
+    @Transactional
+    public void deleteAll() {
+        entityManager.createQuery("DELETE FROM " + clazz.getName());
+    }
+
 }

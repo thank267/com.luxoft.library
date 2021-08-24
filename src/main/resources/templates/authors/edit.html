@@ -8,8 +8,9 @@
 </head>
 <body>
     <div th:if="${author.isPresent()}">
-        <form th:method="POST" th:action="@{/authors/{id}/update(id=${author.get().getId()})}" th:object="${author}">
+        <form th:method="POST" th:action="@{/authors}" th:object="${author}">
             
+            <input type="hidden" th:field="*{id}" id="id"/>
             <label for="name">Введите имя:</label>
             <input type="text" th:field="*{name}" id="name"/>
             <br/>

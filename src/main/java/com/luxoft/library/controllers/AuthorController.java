@@ -1,7 +1,9 @@
 package com.luxoft.library.controllers;
 
+import com.luxoft.library.DTO.AuthorDTO;
 import com.luxoft.library.entities.Author;
-import com.luxoft.library.repositories.AuthorRepository;
+import com.luxoft.library.services.AuthorService;
+import com.luxoft.library.utils.ObjectMapperUtils;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,49 +21,45 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/authors")
 public class AuthorController {
 
-    private AuthorRepository authorRepository;
+    private final ObjectMapperUtils objectMapperUtils;
+
+    private final AuthorService authorService;
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("authors", authorRepository.findAll());
+        model.addAttribute("authors", objectMapperUtils.mapAll(authorService.findAll(), AuthorDTO.class));
         return "authors/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("author", authorRepository.findById(id));
+        model.addAttribute("author", authorService.findById(id).map(au -> objectMapperUtils.map(au, AuthorDTO.class)));
         return "authors/show";
     }
 
     @GetMapping("/new")
-    public String newAuthor(@ModelAttribute("author") Author author) {
-        return "authors/new";
-    }
-
-    @PostMapping()
-    public String create(@ModelAttribute("author") @Validated Author author) {
-        authorRepository.save(author);
-        return "redirect:/authors";
+    public String newAuthor(Model model) {
+        model.addAttribute("author", authorService.create().map(au -> objectMapperUtils.map(au, AuthorDTO.class)));
+        return "authors/edit";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") long id) {
-        model.addAttribute("author", authorRepository.findById(id));
+        model.addAttribute("author", authorService.findById(id).map(au -> objectMapperUtils.map(au, AuthorDTO.class)));
         return "authors/edit";
     }
 
-    @PostMapping("/{id}/update")
-    public String update(@ModelAttribute("author") @Validated Author author, @PathVariable("id") long id) {
-        author.setId(id);
-        authorRepository.update(author);
+    @PostMapping()
+    public String save(@ModelAttribute("author") @Validated AuthorDTO author) {
+        authorService.save(objectMapperUtils.map(author, new Author()));
         return "redirect:/authors";
 
     }
 
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") long id) {
-        authorRepository.deleteById(id);
+        authorService.delete(id);
         return "redirect:/authors";
     }
-    
+
 }
