@@ -21,37 +21,37 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/authors")
 public class AuthorController {
 
-    private final ObjectMapperUtils objectMapperUtils;
+    
 
     private final AuthorService authorService;
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("authors", objectMapperUtils.mapAll(authorService.findAll(), AuthorDTO.class));
+        model.addAttribute("authors", ObjectMapperUtils.mapAll(authorService.findAll(), AuthorDTO.class));
         return "authors/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("author", authorService.findById(id).map(au -> objectMapperUtils.map(au, AuthorDTO.class)));
+        model.addAttribute("author", authorService.findById(id).map(au -> ObjectMapperUtils.map(au, AuthorDTO.class)));
         return "authors/show";
     }
 
     @GetMapping("/new")
     public String newAuthor(Model model) {
-        model.addAttribute("author", authorService.create().map(au -> objectMapperUtils.map(au, AuthorDTO.class)));
+        model.addAttribute("author", authorService.create().map(au -> ObjectMapperUtils.map(au, AuthorDTO.class)));
         return "authors/edit";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") long id) {
-        model.addAttribute("author", authorService.findById(id).map(au -> objectMapperUtils.map(au, AuthorDTO.class)));
+        model.addAttribute("author", authorService.findById(id).map(au -> ObjectMapperUtils.map(au, AuthorDTO.class)));
         return "authors/edit";
     }
 
     @PostMapping()
     public String save(@ModelAttribute("author") @Validated AuthorDTO author) {
-        authorService.save(objectMapperUtils.map(author, new Author()));
+        authorService.save(ObjectMapperUtils.map(author, new Author()));
         return "redirect:/authors";
 
     }

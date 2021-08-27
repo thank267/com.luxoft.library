@@ -22,27 +22,25 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/comments")
 public class CommentController {
 
-    private final ObjectMapperUtils objectMapperUtils;
-
     private final CommentService commentService;
 
     @GetMapping("/new")
     public String newComment(Model model, @RequestParam long bookId) {
         model.addAttribute("comment",
-                commentService.create(bookId).map(au -> objectMapperUtils.map(au, CommentDTO.class)));
+                commentService.create(bookId).map(au -> ObjectMapperUtils.map(au, CommentDTO.class)));
         return "comments/edit";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") long id) {
         model.addAttribute("comment",
-                commentService.findById(id).map(cm -> objectMapperUtils.map(cm, CommentDTO.class)));
+                commentService.findById(id).map(cm -> ObjectMapperUtils.map(cm, CommentDTO.class)));
         return "comments/edit";
     }
 
     @PostMapping()
     public String save(@ModelAttribute("comment") @Validated CommentDTO comment) {
-        commentService.save(objectMapperUtils.map(comment, new Comment()));
+        commentService.save(ObjectMapperUtils.map(comment, new Comment()));
         return "redirect:/books/" + comment.getBookId();
 
     }

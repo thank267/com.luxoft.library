@@ -24,8 +24,7 @@ import com.luxoft.library.DTO.BookDTO;
 @SpringBootTest
 public class ObjectMapperUtilsTest {
 
-    @Autowired
-    private ObjectMapperUtils objectMapperUtils;
+   
 
     @Test
     public void whenConvertGenreEntityToGenretDto_thenCorrect() {
@@ -33,7 +32,7 @@ public class ObjectMapperUtilsTest {
         genre.setId(1L);
         genre.setName("Test genre");
 
-        GenreDTO genreDTO = objectMapperUtils.map(genre, GenreDTO.class);
+        GenreDTO genreDTO = ObjectMapperUtils.map(genre, GenreDTO.class);
         assertThat(genre.getId() == genreDTO.getId()).isTrue();
         assertThat(genre.getName() == genreDTO.getName()).isTrue();
 
@@ -45,7 +44,7 @@ public class ObjectMapperUtilsTest {
         genreDTO.setId(1L);
         genreDTO.setName("Test genre");
 
-        Genre genre = objectMapperUtils.map(genreDTO, new Genre());
+        Genre genre = ObjectMapperUtils.map(genreDTO, new Genre());
         assertThat(genre.getId() == genreDTO.getId()).isTrue();
         assertThat(genre.getName() == genreDTO.getName()).isTrue();
     }
@@ -64,7 +63,7 @@ public class ObjectMapperUtilsTest {
         genreList.add(genre1);
         genreList.add(genre2);
 
-        List<GenreDTO> genreListDTO = objectMapperUtils.mapAll(genreList, GenreDTO.class);
+        List<GenreDTO> genreListDTO = ObjectMapperUtils.mapAll(genreList, GenreDTO.class);
         assertThat(genreList.get(0).getName() == genreListDTO.get(0).getName()).isTrue();
         assertThat(genreList.size() == genreListDTO.size()).isTrue();
     }
@@ -75,7 +74,7 @@ public class ObjectMapperUtilsTest {
         author.setId(1L);
         author.setName("Test author");
 
-        AuthorDTO authorDTO = objectMapperUtils.map(author, AuthorDTO.class);
+        AuthorDTO authorDTO = ObjectMapperUtils.map(author, AuthorDTO.class);
         assertThat(author.getId() == authorDTO.getId()).isTrue();
         assertThat(author.getName() == authorDTO.getName()).isTrue();
 
@@ -87,7 +86,7 @@ public class ObjectMapperUtilsTest {
         authorDTO.setId(1L);
         authorDTO.setName("Test author");
 
-        Author author = objectMapperUtils.map(authorDTO, new Author());
+        Author author = ObjectMapperUtils.map(authorDTO, new Author());
         assertThat(author.getId() == authorDTO.getId()).isTrue();
         assertThat(author.getName() == authorDTO.getName()).isTrue();
     }
@@ -106,7 +105,7 @@ public class ObjectMapperUtilsTest {
         authorList.add(author1);
         authorList.add(author2);
 
-        List<AuthorDTO> authorListDTO = objectMapperUtils.mapAll(authorList, AuthorDTO.class);
+        List<AuthorDTO> authorListDTO = ObjectMapperUtils.mapAll(authorList, AuthorDTO.class);
         assertThat(authorList.get(0).getName() == authorListDTO.get(0).getName()).isTrue();
         assertThat(authorList.size() == authorListDTO.size()).isTrue();
     }
@@ -128,7 +127,7 @@ public class ObjectMapperUtilsTest {
         book.setAuthor(author);
         book.setGenre(genre);
 
-        BookDTO bookDTO = objectMapperUtils.map(book, BookDTO.class);
+        BookDTO bookDTO = ObjectMapperUtils.map(book, BookDTO.class);
 
         assertThat(book.getId() == bookDTO.getId()).isTrue();
         assertThat(book.getName() == bookDTO.getName()).isTrue();
@@ -157,7 +156,7 @@ public class ObjectMapperUtilsTest {
         genre.setId(1L);
         genre.setName("Test genre");
 
-        Book book = objectMapperUtils.map(bookDTO, new Book());
+        Book book = ObjectMapperUtils.map(bookDTO, new Book());
         assertThat(book.getId() == bookDTO.getId()).isTrue();
         assertThat(book.getName() == bookDTO.getName()).isTrue();
         assertThat(book.getAuthor().getId() == Long.valueOf(bookDTO.getAuthorId())).isTrue();

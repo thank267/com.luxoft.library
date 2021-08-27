@@ -19,17 +19,15 @@ public class GenreController {
 
     private final GenreService genreService;
 
-    private final ObjectMapperUtils objectMapperUtils;
-
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("genres", objectMapperUtils.mapAll(genreService.findAll(), GenreDTO.class));
+        model.addAttribute("genres", ObjectMapperUtils.mapAll(genreService.findAll(), GenreDTO.class));
         return "genres/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("genre", genreService.findById(id).map(ge -> objectMapperUtils.map(ge, GenreDTO.class)));
+        model.addAttribute("genre", genreService.findById(id).map(ge -> ObjectMapperUtils.map(ge, GenreDTO.class)));
         return "genres/show";
     }
 

@@ -46,12 +46,12 @@ public abstract class AbstractJpaDAO<T extends AbstractEntity, ID> {
 
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void delete(T entity) {
         entityManager.remove(entity);
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public long deleteById(ID id) {
         T entity = this.findById(id).orElseThrow();
         this.delete(entity);

@@ -22,7 +22,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/books")
 public class BookController {
 
-    private final ObjectMapperUtils objectMapperUtils;
+  
 
     private final BookService bookService;
     private final AuthorService authorService;
@@ -30,19 +30,19 @@ public class BookController {
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("books", objectMapperUtils.mapAll(bookService.findAll(), BookDTO.class));
+        model.addAttribute("books", ObjectMapperUtils.mapAll(bookService.findAll(), BookDTO.class));
         return "books/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("book", bookService.findById(id).map(au -> objectMapperUtils.map(au, BookDTO.class)));
+        model.addAttribute("book", bookService.findById(id).map(au -> ObjectMapperUtils.map(au, BookDTO.class)));
         return "books/show";
     }
 
     @GetMapping("/new")
     public String newBook(Model model) {
-        model.addAttribute("book", bookService.create().map(au -> objectMapperUtils.map(au, BookDTO.class)));
+        model.addAttribute("book", bookService.create().map(au -> ObjectMapperUtils.map(au, BookDTO.class)));
         model.addAttribute("authors", authorService.findAll());
         model.addAttribute("genres", genreService.findAll());
         return "books/edit";
@@ -50,13 +50,13 @@ public class BookController {
 
     @PostMapping()
     public String save(@ModelAttribute("book") BookDTO book) {
-        bookService.save(objectMapperUtils.map(book, new Book()));
+        bookService.save(ObjectMapperUtils.map(book, new Book()));
         return "redirect:/books";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") long id) {
-        model.addAttribute("book", bookService.findById(id).map(au -> objectMapperUtils.map(au, BookDTO.class)));
+        model.addAttribute("book", bookService.findById(id).map(au -> ObjectMapperUtils.map(au, BookDTO.class)));
         model.addAttribute("authors", authorService.findAll());
         model.addAttribute("genres", genreService.findAll());
         return "books/edit";
