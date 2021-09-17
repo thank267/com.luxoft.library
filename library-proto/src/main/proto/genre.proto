@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package com.luxoft.library;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+option java_multiple_files = true;
+
+service GenreService {
+
+  rpc findAll(google.protobuf.Empty) returns (stream GenreProto) {}
+
+  rpc findById(google.protobuf.Int64Value) returns (GenreProto) {}
+
+  rpc save(GenreProto) returns (google.protobuf.Int64Value) {}
+
+}
+
+message GenreProto {
+  int64 id = 1;
+  string name = 2;
+}
+
