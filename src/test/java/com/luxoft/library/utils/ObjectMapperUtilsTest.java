@@ -24,7 +24,6 @@ import com.luxoft.library.DTO.BookDTO;
 @SpringBootTest
 public class ObjectMapperUtilsTest {
 
-   
 
     @Test
     public void whenConvertGenreEntityToGenretDto_thenCorrect() {

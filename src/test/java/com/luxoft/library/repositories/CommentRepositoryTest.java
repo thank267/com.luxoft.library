@@ -41,7 +41,6 @@ public class CommentRepositoryTest {
     @Autowired
     private AuthorRepository authorRepository;
 
-    
 
     private Comment comment;
     private Book book;
@@ -54,7 +53,7 @@ public class CommentRepositoryTest {
         author = authorRepository.getById(1L);
 
         book = bookRepository.getById(1L);
-       
+
         comment = new Comment();
         comment.setText("Test text");
         comment.setBook(book);
@@ -64,7 +63,7 @@ public class CommentRepositoryTest {
     @Test
     @Transactional
     public void saveAndFindById() {
-        
+
         Long id = commentRepository.save(comment);
         Comment fetchedComment = commentRepository.findById(comment.getId()).get();
         assertThat(id == fetchedComment.getId()).isTrue();

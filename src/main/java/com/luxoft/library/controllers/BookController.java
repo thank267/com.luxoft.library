@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/books")
 public class BookController {
 
-  
 
     private final BookService bookService;
     private final AuthorService authorService;

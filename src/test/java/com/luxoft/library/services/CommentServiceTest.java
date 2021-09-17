@@ -102,7 +102,7 @@ public class CommentServiceTest {
         commentService.create(1L);
         verify(bookRepository, times(1)).findById(book.getId());
         assertThat(commentService.create(1L)).isEqualTo(Optional.of(new Comment()));
-       
+
     }
 
     @AfterEach
