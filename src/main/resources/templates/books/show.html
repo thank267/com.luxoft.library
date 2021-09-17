@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книга</title>
+</head>
+<body>
+
+    <body>
+    <div th:if="${book.isPresent()}">
+        <p th:text="'Наименование: '+ ${book.get().getName() +', Автор: '+book.get().authorName+', Жанр: '+book.get().genreName}"></p>
+        <a th:href="@{/books/{id}/edit(id=${book.get().getId()})}">Редактировать</a>
+        <a th:href="@{/books/{id}/delete(id=${book.get().getId()})}">Удалить</a>
+        <br/>
+        <a th:href="@{/comments/new?bookId={id}(id=${book.get().getId()})}">Добавить комментарий</a>
+        <table>
+            <tr th:unless="${book.get().getComments().empty}">
+                <td colspan="3"> Комментарии </td>
+            </tr>
+            <tr th:each="comment : ${book.get().getComments()}">
+                <td><span th:text="${comment.getText()}"> text </span></td>
+                <td><a th:href="@{/comments/{commentId}/delete?bookId={bookId}(bookId=${book.get().getId()}, commentId=${comment.getId()})}">Удалить комментарий</a></td>
+                <td><a th:href="@{/comments/{commentId}/edit(commentId=${comment.getId()})}">Редактировать комментарий</a></td>
+            </tr>
+        </table>
+    </div>
+    <div th:unless="${book.isPresent()}">
+        <p>Книга не найдена</p>
+    </div>
+
+    <div sec:authorize="isAuthenticated()>"
+        <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+
+     
+    
+    
+</body>
+</html>
