@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Редактировать книгу</title>
+</head>
+<body>
+<div th:if="${book.isPresent()}">
+    <form th:method="POST" th:action="@{/books}" th:object="${book}">
+
+        <input type="hidden" th:field="*{id}" id="id"/>
+        <label for="name">Введите имя:</label>
+        <input type="text" th:field="*{name}" id="name"/>
+        <label for="authorId">Выберите автора:</label>
+        <select th:field="*{authorId}" id="authorId">
+            <option th:each="author: ${authors}" th:value="${author.getId()}" th:text="${author.getName()}"></option>
+        </select>
+        <label for="genreId">Выберите жанр:</label>
+        <select th:field="*{genreId}" id="genreId">
+            <option th:each="genre: ${genres}" th:value="${genre.getId()}" th:text="${genre.getName()}"></option>
+        </select>
+        <br/>
+        <input type="submit" value="Изменить!"/>
+
+    </form>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+import "author.proto";
+import "genre.proto";
+
+package com.luxoft.library;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+
+option java_multiple_files = true;
+
+service BookService {
+
+  rpc findAll(google.protobuf.Empty) returns (stream BookProto) {}
+
+  rpc findById(google.protobuf.Int64Value) returns (BookProto) {}
+
+  rpc save(BookProto) returns (google.protobuf.Int64Value) {}
+
+  rpc delete(google.protobuf.Int64Value) returns (google.protobuf.Int64Value) {}
+
+  rpc create(google.protobuf.Empty) returns (BookProto) {}
+}
+
+message BookProto {
+  int64 id = 1;
+  string name = 2;
+  AuthorProto author = 3;
+  GenreProto genre = 4;
+
+}
+
